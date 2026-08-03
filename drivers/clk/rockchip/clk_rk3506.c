@@ -465,10 +465,10 @@ static ulong rk3506_saradc_set_rate(struct rk3506_clk_priv *priv, ulong clk_id,
 
 	if (32000 % rate == 0) {
 		sel = CLK_SARADC_SEL_32K;
-		div = 1;
+		div = DIV_ROUND_UP(32000, rate);
 	} else if (400000 % rate == 0) {
 		sel = CLK_SARADC_SEL_400K;
-		div = 1;
+		div = DIV_ROUND_UP(400000, rate);
 	} else {
 		sel = CLK_SARADC_SEL_24M;
 		div = DIV_ROUND_UP(OSC_HZ, rate);
