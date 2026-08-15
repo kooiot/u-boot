@@ -82,12 +82,13 @@ void rockchip_stimer_init(void)
 
 #define RK3506_OTP_CPU_CODE_OFFSET		0x02
 #define RK3506_OTP_SPECIFICATION_OFFSET		0x08
+#define RK3506_OTP_VARIANT_OFFSET		0x36
 
 int checkboard(void)
 {
-	u8 cpu_code[2], specification;
+	u8 cpu_code[2], specification, package, variant[2];
 	struct udevice *dev;
-	char suffix[2];
+	char suffix[3];
 	int ret;
 
 	if (!IS_ENABLED(CONFIG_ROCKCHIP_OTP) || !CONFIG_IS_ENABLED(MISC))
@@ -113,11 +114,26 @@ int checkboard(void)
 		log_debug("Could not read specification, ret=%d\n", ret);
 		return 0;
 	}
+	package = 0;
 	specification &= 0x1f;
+
+	/* variant: used to identify RK3506G SoC variant */
+	ret = misc_read(dev, RK3506_OTP_VARIANT_OFFSET, variant, 2);
+	if (ret < 0) {
+		log_debug("Could not read cpu-code, ret=%d\n", ret);
+		return 0;
+	}
+	if (variant[0] & 0x1f) {
+		specification = variant[0] & 0x1f;
+		/* package: likely SoC variant revision, 0x2 for RK3506G2 */
+		package = variant[1] & 0x7;
+	}
 
 	/* for RK3506J i.e. '@' + 0xA = 'J' */
 	suffix[0] = specification > 1 ? '@' + specification : '\0';
-	suffix[1] = '\0';
+	/* for RK3506G2 i.e. '0' + 0x2 = '2' */
+	suffix[1] = package > 0 ? '0' + package : '\0';
+	suffix[2] = '\0';
 
 	printf("SoC:   RK%02x%02x%s\n", cpu_code[0], cpu_code[1], suffix);
 
