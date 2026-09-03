@@ -21,16 +21,18 @@
 		stdout-path = "serial0:115200n8";
 	};
 
-	leds {
-		compatible = "gpio-leds";
+	ext_gmac0: external-gmac-clock-0 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <50000000>;
+		clock-output-names = "ext_gmac_0";
+	};
 
-		status_led: status-led {
-			label = "kooiot:green:status";
-			gpios = <&gpio1 RK_PB3 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "heartbeat";
-			pinctrl-names = "default";
-			pinctrl-0 = <&status_led>;
-		};
+	ext_gmac1: external-gmac-clock-1 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <50000000>;
+		clock-output-names = "ext_gmac_1";
 	};
 
 	vcc12v_dc: vcc12v-dc {
@@ -71,6 +73,18 @@
 		regulator-max-microvolt = <1800000>;
 		vin-supply = <&vcc3v3_stb>;
 	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		status_led: status-led {
+			label = "kooiot:green:status";
+			gpios = <&gpio1 RK_PB3 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+			pinctrl-names = "default";
+			pinctrl-0 = <&status_led_pin>;
+		};
+	};
 };
 
 &saradc {
@@ -81,7 +95,7 @@
 &sfc {
 	status = "okay";
 
-	flash@0 {
+	flash: spinand@0 {
 		compatible = "spi-nand";
 		reg = <0>;
 		spi-max-frequency = <80000000>;
@@ -204,7 +218,7 @@
 
 	leds {
 		/omit-if-no-ref/
-		status_led: status-led {
+		status_led_pin: status-led-pin {
 			rockchip,pins = <1 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};

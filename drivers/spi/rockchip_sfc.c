@@ -660,7 +660,7 @@ static void rockchip_sfc_delay_lines_tuning(struct rockchip_sfc *sfc, struct spi
 	u16 right, w_left = 0;
 	u16 best_left = 0, best_right = 0;
 	bool in_window = false;
-	u8 cs = plat->cs[0];
+	u8 cs = plat->cs;
 
 	rockchip_sfc_clk_set_rate(sfc, SFC_DLL_THRESHOLD_RATE);
 	op.data.buf.in = &id;
@@ -760,7 +760,7 @@ static int rockchip_sfc_exec_op(struct spi_slave *mem,
 	 */
 	if (rockchip_sfc_get_version(sfc) >= SFC_VER_4) {
 		struct dm_spi_slave_plat *plat = dev_get_parent_plat(mem->dev);
-		u8 cs = plat->cs[0];
+		u8 cs = plat->cs;
 
 		if (!sfc->dll_cells[cs] && sfc->speed > SFC_DLL_THRESHOLD_RATE)
 			rockchip_sfc_delay_lines_tuning(sfc, mem);

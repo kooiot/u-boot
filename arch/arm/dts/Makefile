@@ -88,7 +88,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3368) += \
 	rk3368-px5-evb.dtb
 
 dtb-$(CONFIG_ROCKCHIP_RK3506) += \
-	rk3506-rk3506-vx-hd-rk3506-iot-spinand.dts.dtb
+	rk3506-vx-hd-rk3506-iot-spinand.dtb
 
 dtb-$(CONFIG_ARCH_S5P4418) += \
 	s5p4418-nanopi2.dtb

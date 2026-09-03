@@ -6,6 +6,7 @@
 
 #define LOG_CATEGORY UCLASS_CLK
 
+#include <dm.h>
 #include <clk-uclass.h>
 #include <asm/arch-rockchip/clock.h>
 #include <asm/arch-rockchip/cru_rk3506.h>

@@ -2,11 +2,9 @@
 
 #include "rk3506-u-boot.dtsi"
 
-&fspi {
-	flash@0 {
-		bootph-pre-ram;
-		bootph-some-ram;
-	};
+&flash {
+	bootph-pre-ram;
+	bootph-some-ram;
 };
 
 &sdmmc_det_pin {

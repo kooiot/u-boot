@@ -392,7 +392,7 @@ static const struct rockchip_usb2phy_cfg rk3399_usb2phy_cfgs[] = {
 static const struct rockchip_usb2phy_cfg rk3506_phy_cfgs[] = {
 	{
 		.reg		= 0xff2b0000,
-		.clkout_ctl_phy = { 0x041c, 7, 2, 0, 0x27 },
+		.clkout_ctl = { 0x041c, 7, 2, 0, 0x27 },
 		.port_cfgs	= {
 			[USB2PHY_PORT_OTG] = {
 				.phy_sus	= { 0x0060, 1, 0, 2, 1 },
@@ -490,6 +490,7 @@ static const struct udevice_id rockchip_usb2phy_ids[] = {
 		.compatible = "rockchip,rk3506-usb2phy",
 		.data = (ulong)&rk3506_phy_cfgs,
 	},
+	{
 		.compatible = "rockchip,rk3568-usb2phy",
 		.data = (ulong)&rk3568_phy_cfgs,
 	},
