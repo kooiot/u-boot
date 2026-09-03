@@ -12,4 +12,7 @@ config SYS_SOC
 config SYS_CONFIG_NAME
 	default "rk3506_common"
 
+config TEXT_BASE
+	default 0x00a00000
+
 endif
