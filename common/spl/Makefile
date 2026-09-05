@@ -34,6 +34,7 @@ obj-$(CONFIG_$(SPL_TPL_)NVME) += spl_nvme.o
 obj-$(CONFIG_$(SPL_TPL_)SEMIHOSTING) += spl_semihosting.o
 obj-$(CONFIG_$(SPL_TPL_)DFU) += spl_dfu.o
 obj-$(CONFIG_$(SPL_TPL_)SPI_LOAD) += spl_spi.o
+obj-$(CONFIG_$(SPL_TPL_)SPI_NAND_LOAD) += spl_spi_nand.o
 obj-$(CONFIG_$(SPL_TPL_)RAM_SUPPORT) += spl_ram.o
 obj-$(CONFIG_$(SPL_TPL_)USB_SDP_SUPPORT) += spl_sdp.o
 endif

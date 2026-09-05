@@ -75,6 +75,10 @@ static int spl_node_to_boot_device(int node)
 	if (!uclass_get_device_by_of_offset(UCLASS_SPI_FLASH, node, &parent))
 		return BOOT_DEVICE_SPI;
 
+	if (CONFIG_IS_ENABLED(SPI_NAND_LOAD) &&
+	    !fdt_node_check_compatible(gd->fdt_blob, node, "spi-nand"))
+		return BOOT_DEVICE_SPI;
+
 	return -1;
 }
 
@@ -212,6 +216,11 @@ int spl_decode_boot_device(u32 boot_device, char *buf, size_t buflen)
 			}
 
 			ret = uclass_find_device_by_of_offset(UCLASS_SPI_FLASH, node, &dev);
+			if (ret && CONFIG_IS_ENABLED(SPI_NAND_LOAD)) {
+				ret = uclass_find_device_by_of_offset(UCLASS_MTD, node, &dev);
+				if (!ret && !device_is_compatible(dev, "spi-nand"))
+					ret = -ENODEV;
+			}
 			if (ret) {
 				debug("%s: could not find udevice for %s\n", __func__, conf);
 				continue;
