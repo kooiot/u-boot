@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <os.h>
 
+#ifdef CONFIG_SPL_BUILD
+__weak void spl_hang_reset(void) {}
+#endif
+
 /**
  * hang - stop processing by staying in an endless loop
  *
@@ -28,6 +32,9 @@ void hang(void)
 	puts("### ERROR ### Please RESET the board ###\n");
 #endif
 	bootstage_error(BOOTSTAGE_ID_NEED_RESET);
+#ifdef CONFIG_SPL_BUILD
+	spl_hang_reset();
+#endif
 	if (IS_ENABLED(CONFIG_SANDBOX))
 		os_exit(1);
 	for (;;)

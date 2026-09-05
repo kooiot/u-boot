@@ -2,6 +2,12 @@
 
 #include "rk3506-u-boot.dtsi"
 
+/ {
+       chosen {
+               u-boot,spl-boot-order = "same-as-spl", &sdmmc, &flash;
+       };
+};
+
 &flash {
 	bootph-pre-ram;
 	bootph-some-ram;

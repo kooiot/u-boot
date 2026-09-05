@@ -126,8 +126,13 @@
 					arch = "arm";
 					os = "tee";
 					compression = "none";
+#ifdef CONFIG_ROCKCHIP_RK3506
+					load = <(CFG_SYS_SDRAM_BASE + 0x1000)>;
+					entry = <(CFG_SYS_SDRAM_BASE + 0x1000)>;
+#else
 					load = <(CFG_SYS_SDRAM_BASE + 0x8400000)>;
 					entry = <(CFG_SYS_SDRAM_BASE + 0x8400000)>;
+#endif
 
 					tee-os {
 					};

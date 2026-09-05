@@ -116,6 +116,21 @@ __weak int arch_cpu_init(void)
 	return 0;
 }
 
+#ifdef CONFIG_SPL_BUILD
+void spl_hang_reset(void)
+{
+#if defined(CONFIG_SPL_SYSRESET) && defined(CONFIG_SPL_DRIVERS_MISC_SUPPORT)
+	/* reset is available after dm setup */
+	if (gd->flags & GD_FLG_SPL_EARLY_INIT) {
+		printf("# Reset the board to bootrom #\n");
+		writel(BOOT_BROM_DOWNLOAD, CONFIG_ROCKCHIP_BOOT_MODE_REG);
+		do_reset(NULL, 0, 0, NULL);
+	}
+#endif
+}
+#endif
+
+
 void board_init_f(ulong dummy)
 {
 	int ret;

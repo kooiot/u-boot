@@ -291,8 +291,8 @@ static int load_simple_fit(struct spl_load_info *info, ulong fit_offset,
 	}
 
 	if (CONFIG_IS_ENABLED(FIT_SIGNATURE)) {
-		printf("## Checking hash(es) for Image %s ... ",
-		       fit_get_name(fit, node, NULL));
+		printf("## Checking hash(es) for Image %s 0x%08x ... ",
+		       fit_get_name(fit, node, NULL), (int)src);
 		if (!fit_image_verify_with_data(fit, node, gd_fdt_blob(), src,
 						length))
 			return -EPERM;
