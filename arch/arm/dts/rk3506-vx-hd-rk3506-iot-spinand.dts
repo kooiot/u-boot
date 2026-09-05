@@ -21,13 +21,13 @@
 		#size-cells = <1>;
 		boot@0 {
 			label = "boot";
-			reg = <0x0000000 0x0100000>;
+			reg = <0x0000000 0x0200000>;
 			read-only;
 		};
 
-		ubi0@100000 {
+		ubi0@200000 {
 			label = "ubi";
-			reg = <0x0100000 0x0000000>;
+			reg = <0x0200000 0x0000000>;
 		};
 	};
 };
