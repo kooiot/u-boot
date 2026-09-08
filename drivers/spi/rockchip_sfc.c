@@ -109,7 +109,9 @@
 #define  SFC_VER_3			0x3
 #define  SFC_VER_4			0x4
 #define  SFC_VER_5			0x5
+#define  SFC_VER_6			0x6
 #define  SFC_VER_8			0x8
+#define  SFC_VER_9			0x9
 
 /* Delay line controller resiter */
 #define SFC_DLL_CTRL0			0x3C
@@ -318,6 +320,9 @@ static int rockchip_sfc_probe(struct udevice *bus)
 	if (ret)
 		dev_dbg(sfc->dev, "sfc Enable clock fail for %s: %d\n", bus->name, ret);
 #endif
+	sfc->version = rockchip_sfc_get_version(sfc);
+	if (sfc->version)
+		sfc->version = SFC_VER_6;
 
 	ret = rockchip_sfc_init(sfc);
 	if (ret)
